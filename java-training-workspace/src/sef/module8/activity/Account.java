@@ -15,7 +15,9 @@ import java.util.regex.Pattern;
  */
 public class Account {
 	
-	static final Pattern pattern = Pattern.compile("^(?=.*\\d)(?=.*[a-zA-Z])[a-zA-Z\\d]+$");
+//	static final Pattern pattern = Pattern.compile("^(?=.*\\d)(?=.*[a-zA-Z])[a-zA-Z\\d]+$");
+	static final Pattern alphaPattern = Pattern.compile("^[a-zA-Z]+$");
+	static final Pattern numericPattern = Pattern.compile("^\\d+$");
 	
 	private String accountName;
 
@@ -31,8 +33,9 @@ public class Account {
 		if(accountName.length() <= 4) {
 			throw new AccountException(AccountException.NAME_TOO_SHORT, accountName);
 		}
-		Matcher matcher = pattern.matcher(accountName);
-		if(!matcher.find()) {
+		boolean atleastOneIsAlpa = alphaPattern.matcher(accountName).find();
+		boolean atleastOneIsNumeric = numericPattern.matcher(accountName).find();
+		if(atleastOneIsAlpa && atleastOneIsNumeric) {
 			throw new AccountException(AccountException.NAME_TOO_SIMPLE, accountName);
 		}
 			
