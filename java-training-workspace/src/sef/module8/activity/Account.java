@@ -14,8 +14,10 @@ import java.util.regex.Pattern;
  *
  */
 public class Account {
-
-
+	
+	static final Pattern pattern = Pattern.compile("^(?=.*\\d)(?=.*[a-zA-Z])[a-zA-Z\\d]+$");
+	
+	private String accountName;
 
 	/**
 	 * Creates an Account object with the specified name.  If the accout name
@@ -25,9 +27,16 @@ public class Account {
 	 * @throws AccountException
 	 */
 	public  Account(String accountName) throws AccountException{
+		
+		if(accountName.length() <= 4) {
+			throw new AccountException(AccountException.NAME_TOO_SHORT, accountName);
+		}
+		Matcher matcher = pattern.matcher(accountName);
+		if(!matcher.find()) {
+			throw new AccountException(AccountException.NAME_TOO_SIMPLE, accountName);
+		}
 			
-			
-			
+		this.accountName = accountName;	
 	}
 	
 	
@@ -37,6 +46,6 @@ public class Account {
 	 * @return the account name
 	 */
 	public String getName(){
-		return "";
+		return accountName;
 	}
 }
