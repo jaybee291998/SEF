@@ -29,7 +29,7 @@ public class Account {
 	 * @throws AccountException
 	 */
 	public  Account(String accountName) throws AccountException{
-		
+		if(accountName == null) throw new AccountException(AccountException.NAME_TOO_SHORT, accountName);
 		if(accountName.length() <= 4) {
 			throw new AccountException(AccountException.NAME_TOO_SHORT, accountName);
 		}
